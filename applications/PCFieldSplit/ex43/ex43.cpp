@@ -48,7 +48,7 @@ bool SetRefinementFlag(const std::vector < double >& x, const int& elemgroupnumb
  double radius2 = radius * radius;  
   if ( (x[0]*x[0] + x[1] * x[1]) < radius2){
     refine	= true;
-  }	*/  
+  }*/	  
   return refine;
 }
 
@@ -74,7 +74,7 @@ int main(int argc, char** args) {
   unsigned dim = mlMsh.GetDimension();
 
   unsigned numberOfUniformLevels = 2;
-  unsigned numberOfSelectiveLevels =2;
+  unsigned numberOfSelectiveLevels =9;
   // mlMsh.RefineMesh(numberOfUniformLevels , numberOfUniformLevels + numberOfSelectiveLevels, NULL);
   mlMsh.RefineMesh(numberOfUniformLevels + numberOfSelectiveLevels, numberOfUniformLevels, SetRefinementFlag);
   // erase all the coarse mesh levels
@@ -112,8 +112,8 @@ int main(int argc, char** args) {
  
   //TODO for the first reviewer change number of pre- post- smoothing here for example 2 or 4
   
-  system.SetNumberPreSmoothingStep(1);
-  system.SetNumberPostSmoothingStep(1);
+  system.SetNumberPreSmoothingStep(2);
+  system.SetNumberPostSmoothingStep(2);
     
 //   system.SetNumberPreSmoothingStep(2);
 //   system.SetNumberPostSmoothingStep(2);
