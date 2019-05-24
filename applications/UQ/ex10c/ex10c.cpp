@@ -251,6 +251,7 @@ int main (int argc, char** argv) {
     sprintf (name, "uSGAll%d", i);
 
     FSAllp[i] = new FieldSplitTree (PREONLY, ILU_PRECOND, fielduAllp, solutionTypeuAllp, name);
+    //FSAllp[i] = new FieldSplitTree (RICHARDSON, ILU_PRECOND, fielduAllp, solutionTypeuAllp, name);
     FSAllp[i]->SetTolerances (1.e-10, 1.e-10, 1.e+50, 5); //(1.e-10, 1.e-10, 1.e+50, 10)
     FSAllp[i]->SetRichardsonScaleFactor (1.0);          // 0.5
 
