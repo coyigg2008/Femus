@@ -193,13 +193,46 @@ int main (int argc, char** argv) {
   FSAllp = new FieldSplitTree * [pIndex + 1];
 
   //BEGIN buid fieldSplitTree (only for FieldSplitPreconditioner)
-  for (unsigned i = 0; i <= pIndex; i++) {
+//   for (unsigned i = 0; i <= pIndex; i++) {
+// //  for (int i = pIndex; i >= 0; i--) {
+//     std::vector < unsigned > fielduAllp;
+//     std::vector < unsigned > solutionTypeuAllp;
+// 
+//     for (unsigned j = 0; j < Jp.size(); j++) {
+//       if (Jp[j][0] == i) {
+//           
+//         char name[10];
+//         sprintf (name, "uSG%d", j);
+// 
+//         unsigned k = fielduAllp.size();
+//         fielduAllp.resize (k + 1);
+//         solutionTypeuAllp.resize (k + 1);
+// 
+//         fielduAllp[k] = systemSG.GetSolPdeIndex (name);
+//         solutionTypeuAllp[k] = mlSol.GetSolutionType (name);
+// 
+//       }
+//     }
+// 
+//     char name[10];
+//     sprintf (name, "uSGAll%d", i);
+// 
+//     FSAllp[i] = new FieldSplitTree (PREONLY, ILU_PRECOND, fielduAllp, solutionTypeuAllp, name);
+//     FSAllp[i]->SetTolerances (1.e-10, 1.e-10, 1.e+50, 1); //(1.e-10, 1.e-10, 1.e+50, 10)
+//     FSAllp[i]->SetRichardsonScaleFactor (1.0);          // 0.5
+// 
+//     FSAll.push_back (FSAllp[i]);
+// 
+//   }
+   unsigned nIndex;
+   nIndex = (pIndex % 2 == 0) ? pIndex / 2 : (pIndex / 2 + 1);
+   for (unsigned i = 0; i <= nIndex; i++) {
 //  for (int i = pIndex; i >= 0; i--) {
     std::vector < unsigned > fielduAllp;
     std::vector < unsigned > solutionTypeuAllp;
 
     for (unsigned j = 0; j < Jp.size(); j++) {
-      if (Jp[j][0] == i) {
+      if (Jp[j][0] == i || Jp[j][0] == pIndex + 1 - i) {
           
         char name[10];
         sprintf (name, "uSG%d", j);
@@ -218,17 +251,16 @@ int main (int argc, char** argv) {
     sprintf (name, "uSGAll%d", i);
 
     FSAllp[i] = new FieldSplitTree (PREONLY, ILU_PRECOND, fielduAllp, solutionTypeuAllp, name);
-    FSAllp[i]->SetTolerances (1.e-10, 1.e-10, 1.e+50, 1); //(1.e-10, 1.e-10, 1.e+50, 10)
+    FSAllp[i]->SetTolerances (1.e-10, 1.e-10, 1.e+50, 5); //(1.e-10, 1.e-10, 1.e+50, 10)
     FSAllp[i]->SetRichardsonScaleFactor (1.0);          // 0.5
 
     FSAll.push_back (FSAllp[i]);
 
   }
-
   //FieldSplitTree uSG (PREONLY, FIELDSPLIT_PRECOND, FSAll, "uSG");
   //FieldSplitTree uSG (RICHARDSON, FIELDSPLIT_PRECOND, FSAll, "uSG");
-  //FieldSplitTree uSG (RICHARDSON, FIELDSPLIT_MULTIPLICATIVE_PRECOND, FSAll, "uSG");
-  FieldSplitTree uSG (RICHARDSON, FIELDSPLIT_SYMMETRIC_MULTIPLICATIVE_PRECOND, FSAll, "uSG");
+  FieldSplitTree uSG (RICHARDSON, FIELDSPLIT_MULTIPLICATIVE_PRECOND, FSAll, "uSG");
+  //FieldSplitTree uSG (RICHARDSON, FIELDSPLIT_SYMMETRIC_MULTIPLICATIVE_PRECOND, FSAll, "uSG");
   uSG.PrintFieldSplitTree();
 
   //systemSG.SetOuterSolver(FGMRES);
