@@ -78,7 +78,7 @@ double bLaplace = 1.5;
 double muLaplace = 0.;
 //END
 
-unsigned numberOfUniformLevels = 4; //refinement for the PDE mesh
+unsigned numberOfUniformLevels = 5; //refinement for the PDE mesh
 
 int main (int argc, char** argv) {
 
@@ -218,21 +218,21 @@ int main (int argc, char** argv) {
 //     sprintf (name, "uSGAll%d", i);
 // 
 //     FSAllp[i] = new FieldSplitTree (PREONLY, ILU_PRECOND, fielduAllp, solutionTypeuAllp, name);
-//     FSAllp[i]->SetTolerances (1.e-10, 1.e-10, 1.e+50, 1); //(1.e-10, 1.e-10, 1.e+50, 10)
+//     FSAllp[i]->SetTolerances (1.e-10, 1.e-10, 1.e+50, 5); //(1.e-10, 1.e-10, 1.e+50, 10)
 //     FSAllp[i]->SetRichardsonScaleFactor (1.0);          // 0.5
 // 
 //     FSAll.push_back (FSAllp[i]);
 // 
 //   }
-   unsigned nIndex;
-   nIndex = (pIndex % 2 == 0) ? pIndex / 2 : (pIndex / 2 + 1);
+  
+   unsigned nIndex = pIndex / 2 ;
    for (unsigned i = 0; i <= nIndex; i++) {
 //  for (int i = pIndex; i >= 0; i--) {
     std::vector < unsigned > fielduAllp;
     std::vector < unsigned > solutionTypeuAllp;
 
     for (unsigned j = 0; j < Jp.size(); j++) {
-      if (Jp[j][0] == i || Jp[j][0] == pIndex + 1 - i) {
+      if ( Jp[j][0] == i || (Jp[j][0] >= nIndex && i >= nIndex)) {
           
         char name[10];
         sprintf (name, "uSG%d", j);
@@ -251,7 +251,7 @@ int main (int argc, char** argv) {
     sprintf (name, "uSGAll%d", i);
 
     FSAllp[i] = new FieldSplitTree (PREONLY, ILU_PRECOND, fielduAllp, solutionTypeuAllp, name);
-    //FSAllp[i] = new FieldSplitTree (RICHARDSON, ILU_PRECOND, fielduAllp, solutionTypeuAllp, name);
+//    FSAllp[i] = new FieldSplitTree (RICHARDSON, ILU_PRECOND, fielduAllp, solutionTypeuAllp, name);
     FSAllp[i]->SetTolerances (1.e-10, 1.e-10, 1.e+50, 5); //(1.e-10, 1.e-10, 1.e+50, 10)
     FSAllp[i]->SetRichardsonScaleFactor (1.0);          // 0.5
 
@@ -400,7 +400,7 @@ int main (int argc, char** argv) {
     */
 
 
-  for (unsigned i = 1; i <= pIndex; i++) {
+  for (unsigned i = 1; i <= nIndex; i++) {
     delete FSAllp[i];
   }
   delete [] FSAllp;
