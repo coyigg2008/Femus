@@ -173,33 +173,75 @@ int main (int argc, char** argv) {
     systemSG.AddSolutionToSystemPDE (name);
   }
 
-  FieldSplitTree **FielduSGi;
+//   FieldSplitTree **FielduSGi;
+// 
+//   FielduSGi = new FieldSplitTree * [Jp.size()];
 
-  FielduSGi = new FieldSplitTree * [Jp.size()];
+//   std::vector < FieldSplitTree *> FSAll;
+//   FSAll.reserve (Jp.size());
 
   std::vector < FieldSplitTree *> FSAll;
-  FSAll.reserve (Jp.size());
+  FSAll.reserve (pIndex + 1);
 
+  FieldSplitTree **FSAllp;
+  FSAllp = new FieldSplitTree * [pIndex + 1];
+  
 
-  //BEGIN buid fieldSplitTree (only for FieldSplitPreconditioner)
-  for (unsigned i = 0; i < Jp.size(); i++) {
+//   //BEGIN buid fieldSplitTree (only for FieldSplitPreconditioner)
+//   for (unsigned i = 0; i < Jp.size(); i++) {
+//     char name[10];
+//     sprintf (name, "uSG%d", i);
+//     std::vector < unsigned > fielduSGi (1);
+//     fielduSGi[0] = systemSG.GetSolPdeIndex (name);
+// 
+//     std::vector < unsigned > solutionTypeuSGi (1);
+//     solutionTypeuSGi[0] = mlSol.GetSolutionType (name);
+// 
+//     FielduSGi[i] = new FieldSplitTree (RICHARDSON, ILU_PRECOND, fielduSGi, solutionTypeuSGi, name);
+//     //FielduSGi[i] = new FieldSplitTree (PREONLY, ILU_PRECOND, fielduSGi, solutionTypeuSGi, name);
+//     FielduSGi[i]->SetTolerances (1.e-10, 1.e-10, 1.e+50, 50);
+//     FielduSGi[i]->SetRichardsonScaleFactor(0.6); 
+//     
+//     
+//     FSAll.push_back (FielduSGi[i]);
+//   }
+
+  
+    unsigned nIndex = pIndex / 2 ;
+   for (unsigned i = 0; i <= nIndex; i++) {
+//  for (int i = pIndex; i >= 0; i--) {
+    std::vector < unsigned > fielduAllp;
+    std::vector < unsigned > solutionTypeuAllp;
+
+    for (unsigned j = 0; j < Jp.size(); j++) {
+      if ( Jp[j][0] == i || (Jp[j][0] >= nIndex && i >= nIndex)) {
+          
+        char name[10];
+        sprintf (name, "uSG%d", j);
+
+        unsigned k = fielduAllp.size();
+        fielduAllp.resize (k + 1);
+        solutionTypeuAllp.resize (k + 1);
+
+        fielduAllp[k] = systemSG.GetSolPdeIndex (name);
+        solutionTypeuAllp[k] = mlSol.GetSolutionType (name);
+
+      }
+    }
+
     char name[10];
-    sprintf (name, "uSG%d", i);
-    std::vector < unsigned > fielduSGi (1);
-    fielduSGi[0] = systemSG.GetSolPdeIndex (name);
+    sprintf (name, "uSGAll%d", i);
 
-    std::vector < unsigned > solutionTypeuSGi (1);
-    solutionTypeuSGi[0] = mlSol.GetSolutionType (name);
+    FSAllp[i] = new FieldSplitTree (PREONLY, ILU_PRECOND, fielduAllp, solutionTypeuAllp, name);
+//    FSAllp[i] = new FieldSplitTree (RICHARDSON, ILU_PRECOND, fielduAllp, solutionTypeuAllp, name);
+    FSAllp[i]->SetTolerances (1.e-10, 1.e-10, 1.e+50, 5); //(1.e-10, 1.e-10, 1.e+50, 10)
+    FSAllp[i]->SetRichardsonScaleFactor (1.0);          // 0.5
 
-//    FielduSGi[i] = new FieldSplitTree (RICHARDSON, ILU_PRECOND, fielduSGi, solutionTypeuSGi, name);
-    FielduSGi[i] = new FieldSplitTree (PREONLY, ILU_PRECOND, fielduSGi, solutionTypeuSGi, name);
-    FielduSGi[i]->SetTolerances (1.e-10, 1.e-10, 1.e+50, 50);
-    FielduSGi[i]->SetRichardsonScaleFactor(0.6); 
-    
-    
-    FSAll.push_back (FielduSGi[i]);
+    FSAll.push_back (FSAllp[i]);
+
   }
-
+  
+  
   FieldSplitTree uSG (PREONLY, FIELDSPLIT_MULTIPLICATIVE_PRECOND, FSAll, "uSG");
     
   systemSG.SetOuterSolver(GMRES);
@@ -336,6 +378,10 @@ int main (int argc, char** argv) {
   //END
 
  */ 
+  for (unsigned i = 1; i <= nIndex; i++) {
+    delete FSAllp[i];
+  }
+  delete [] FSAllp;
   return 0;
 
 } //end main
