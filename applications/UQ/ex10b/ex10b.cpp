@@ -191,8 +191,8 @@ int main (int argc, char** argv) {
     std::vector < unsigned > solutionTypeuSGi (1);
     solutionTypeuSGi[0] = mlSol.GetSolutionType (name);
 
-    FielduSGi[i] = new FieldSplitTree (RICHARDSON, ILU_PRECOND, fielduSGi, solutionTypeuSGi, name);
-
+//    FielduSGi[i] = new FieldSplitTree (RICHARDSON, ILU_PRECOND, fielduSGi, solutionTypeuSGi, name);
+    FielduSGi[i] = new FieldSplitTree (PREONLY, ILU_PRECOND, fielduSGi, solutionTypeuSGi, name);
     FielduSGi[i]->SetTolerances (1.e-10, 1.e-10, 1.e+50, 50);
     FielduSGi[i]->SetRichardsonScaleFactor(0.6); 
     
