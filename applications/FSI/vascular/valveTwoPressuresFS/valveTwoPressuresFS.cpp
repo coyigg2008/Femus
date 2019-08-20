@@ -65,7 +65,7 @@ int main(int argc, char** args)
   ni = 0.5;
   E = 260 * 1.0e6; //vein young modulus \\15, 30, 30, 40, 60, 260, 260
   //E = 4.3874951 * 1.0e12;
-  E1 = 1.5 * 1.0e6; //leaflet young modulus \\0.5, 0.8, 1, 1.5, 1.5, 2.2, 1.5
+  E1 = 5.0 * 1.0e6; //leaflet young modulus \\0.5, 0.8, 1, 1.5, 1.5, 2.2, 1.5
   ni1 = 0.5; //0.49
 
   Parameter par(Lref, Uref);
@@ -89,7 +89,7 @@ int main(int argc, char** args)
   unsigned short numberOfUniformRefinedMeshes, numberOfAMRLevels;
 
 
-  numberOfUniformRefinedMeshes = 2;
+  numberOfUniformRefinedMeshes = 4;
 
   numberOfAMRLevels = 0;
 
@@ -392,8 +392,8 @@ int main(int argc, char** args)
 //       outf << time_step << " " << system.GetTime() << " " << fluxes[0] << " " << fluxes[1] << " " << Qtot[0] << " " << Qtot[1] << " " << Qtot[2] << std::endl;
 //     }
 
-    //ml_sol.GetWriter()->SetMovingMesh(mov_vars);
-    //ml_sol.GetWriter()->Write(DEFAULT_OUTPUTDIR, "biquadratic", print_vars, time_step);
+    ml_sol.GetWriter()->SetMovingMesh(mov_vars);
+    ml_sol.GetWriter()->Write(DEFAULT_OUTPUTDIR, "biquadratic", print_vars, time_step);
 
     //if (time_step % 1 == 0) ml_sol.SaveSolution("valve2D", time_step);
 
@@ -409,13 +409,13 @@ int main(int argc, char** args)
   std::cout << " TOTAL TIME:\t" << \
             static_cast<double>(clock() - start_time) / CLOCKS_PER_SEC << std::endl;
 	    
-/*  int  nprocs;	    
+  int  nprocs;	    
   MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
   if(iproc == 0){
     char stdOutputName[100];
     sprintf(stdOutputName, "stdoutput_level%d_nprocs%d_stiffness5FS.txt",numberOfUniformRefinedMeshes, nprocs);
     PrintConvergenceInfo(stdOutputName, numberOfUniformRefinedMeshes, nprocs);
-  }*/	    
+  }	    
 	    
   return 0;
 }

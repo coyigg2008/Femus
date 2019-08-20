@@ -450,7 +450,7 @@ int main(int argc, char **args)
 //     else if(simulation == 6) {    //AAA_thrombus_porous, 15=thrombus
 //       GetSolutionNorm(ml_sol, 7, data[time_step]);
 //     }
-    //ml_sol.GetWriter()->Write(DEFAULT_OUTPUTDIR, "biquadratic", print_vars, time_step + 1);
+    ml_sol.GetWriter()->Write(DEFAULT_OUTPUTDIR, "biquadratic", print_vars, time_step + 1);
   }
 
 
@@ -495,13 +495,13 @@ int main(int argc, char **args)
   std::cout << " TOTAL TIME:\t" << \
           static_cast<double>(clock() - start_time) / CLOCKS_PER_SEC << std::endl;
 	  
-/*  int  nprocs;	    
+  int  nprocs;	    
   MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
   if(iproc == 0){
     char stdOutputName[100];
     sprintf(stdOutputName, "stdoutput_level%d_nprocs%d_turek2DFS.txt",numberOfUniformRefinedMeshes, nprocs);
     PrintConvergenceInfo(stdOutputName, numberOfUniformRefinedMeshes, nprocs);
-  } 	*/  
+  } 	  
 	  
   return 0;
 }
