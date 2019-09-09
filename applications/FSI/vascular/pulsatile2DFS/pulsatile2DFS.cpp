@@ -167,7 +167,7 @@ int main(int argc, char **args)
   // ******* Init multilevel mesh from mesh.neu file *******
   unsigned short numberOfUniformRefinedMeshes, numberOfAMRLevels;
 
-  numberOfUniformRefinedMeshes = 4;//5
+  numberOfUniformRefinedMeshes = 3;//5
   numberOfAMRLevels = 0;
 
   std::cout << 0 << std::endl;
