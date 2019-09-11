@@ -12,6 +12,7 @@ ADD_SUBDIRECTORY(pulsatile3DFS/)
 ADD_SUBDIRECTORY(valve2D/)
 ADD_SUBDIRECTORY(valveTwoPressures/)
 ADD_SUBDIRECTORY(valveTwoPressuresFS/)
+ADD_SUBDIRECTORY(valveTwoPressures_ILU/)
 ADD_SUBDIRECTORY(valve3D/)
 
 FILE(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/applications/FSI/vascular/input/)
