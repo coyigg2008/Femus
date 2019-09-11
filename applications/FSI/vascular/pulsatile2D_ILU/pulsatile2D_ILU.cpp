@@ -375,7 +375,7 @@ int main(int argc, char **args)
   // ******* Set Smoother *******
   //system.SetSolverFineGrids(RICHARDSON);
   system.SetSolverCoarseGrid (PREONLY);
-  system.SetPreconditionerCoarseGrid (MLU_PRECOND);
+  system.SetPreconditionerCoarseGrid (ILU_PRECOND);
   
   //system.SetSolverFineGrids(GMRES);
   //system.SetRichardsonScaleFactor(.4);
@@ -438,10 +438,10 @@ int main(int argc, char **args)
     }
     
     data[time_step].resize(5);
-    /*
+/*    
     if(time_step > 0)
       system.SetMgType(V_CYCLE);
-    */
+*/    
     system.CopySolutionToOldSolution();
 
     system.MGsolve();
