@@ -167,7 +167,7 @@ int main(int argc, char **args)
   // ******* Init multilevel mesh from mesh.neu file *******
   unsigned short numberOfUniformRefinedMeshes, numberOfAMRLevels;
 
-  numberOfUniformRefinedMeshes = 3;//5
+  numberOfUniformRefinedMeshes = 4;//5
   numberOfAMRLevels = 0;
 
   std::cout << 0 << std::endl;
@@ -511,7 +511,7 @@ int main(int argc, char **args)
   MPI_Comm_size(MPI_COMM_WORLD, &nprocs);
   if(iproc == 0){
     char stdOutputName[100];
-    sprintf(stdOutputName, "stdoutput_level%d_nprocs%d_turek2DFS.txt",numberOfUniformRefinedMeshes, nprocs);
+    sprintf(stdOutputName, "stdoutput_level%d_nprocs%d_turek2DILU.txt",numberOfUniformRefinedMeshes, nprocs);
     PrintConvergenceInfo(stdOutputName, numberOfUniformRefinedMeshes, nprocs);
   } 	  
 	  
@@ -1008,7 +1008,7 @@ void PrintConvergenceInfo(char *stdOutfile, const unsigned &level, const int &np
 
   std::ofstream outf;
   char outFileName[100];
-  sprintf(outFileName, "turek2D_convergence_level%d_nprocs%dFS.txt",level, nprocs);
+  sprintf(outFileName, "turek2D_convergence_level%d_nprocs%dILU.txt",level, nprocs);
 
   outf.open(outFileName, std::ofstream::app);
   outf << std::endl << std::endl;
