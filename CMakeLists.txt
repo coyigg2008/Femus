@@ -174,6 +174,8 @@ OPTION(BUILD_REFINEMENT "Build the Refiniment apps" ON)
 
 OPTION(BUILD_PETSC_DEBUG "Build the PETSC debug apps" ON)
 
+OPTION(BUILD_PANCREATIC "Build the Pancreatic apps" ON)
+
 OPTION(BUILD_UQ "Build the UQ apps" ON)
 
 OPTION(BUILD_NONLOCAL "Build the NONLOCAL apps" ON)
