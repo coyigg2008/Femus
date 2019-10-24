@@ -90,9 +90,10 @@ int main(int argc, char** args) {
   
   std::string mesh_file_tot = "./input/" + mesh_files[m];
   
-  ml_mesh.ReadCoarseMesh(mesh_file_tot.c_str(), fe_quad_rule.c_str(), scalingFactor, read_groups, read_boundary_groups);
-//     ml_mesh.GenerateCoarseBoxMesh(2,0,0,0.,1.,0.,0.,0.,0.,EDGE3,fe_quad_rule.c_str());
-//     ml_mesh.GenerateCoarseBoxMesh(0,2,0,0.,0.,0.,1.,0.,0.,EDGE3,fe_quad_rule.c_str());
+ // ml_mesh.ReadCoarseMesh(mesh_file_tot.c_str(), fe_quad_rule.c_str(), scalingFactor, read_groups, read_boundary_groups);
+  ml_mesh.GenerateCoarseBoxMesh(2,0,0,0.,1.,0.,0.,0.,0.,EDGE3,fe_quad_rule.c_str());
+  // ml_mesh.GenerateCoarseBoxMesh(2,2,0,0.,1.,0.,1.,0.,0.,QUAD9,fe_quad_rule.c_str());
+  //ml_mesh.GenerateCoarseBoxMesh(2,2,2,0.,1.,0.,1.,0.,1.,HEX27,fe_quad_rule.c_str());
  
   unsigned numberOfUniformLevels = 2;
   unsigned numberOfSelectiveLevels = 0;
