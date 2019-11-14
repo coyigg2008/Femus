@@ -532,6 +532,7 @@ void AssembleBoussinesqAppoximation_AD(MultiLevelProblem& ml_prob) {
       vector < adept::adouble > gradSolT_gss(dim, 0.);
       vector < double > gradSolTold_gss(dim, 0.);
 
+            
       for(unsigned i = 0; i < nDofsT; i++) {
         solT_gss += phiT[i] * solT[i];
         solTold_gss += phiT[i] * solTold[i];
@@ -553,7 +554,7 @@ void AssembleBoussinesqAppoximation_AD(MultiLevelProblem& ml_prob) {
         std::fill(gradSolV_gss[k].begin(), gradSolV_gss[k].end(), 0);
         std::fill(gradSolVold_gss[k].begin(), gradSolVold_gss[k].end(), 0);
       }
-
+ 
       for(unsigned i = 0; i < nDofsV; i++) {
         for(unsigned  k = 0; k < dim; k++) {
           solV_gss[k] += phiV[i] * solV[k][i];
